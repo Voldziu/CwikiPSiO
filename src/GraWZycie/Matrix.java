@@ -1,5 +1,5 @@
 package GraWZycie;
-import javax.crypto.Mac;
+
 import java.util.Arrays;
 
 import java.util.Random;
@@ -7,7 +7,7 @@ import java.util.Random;
 public class Matrix {
     private int n;
     private int m;
-    private int[][] Macierz = new int[m][n];
+    private int[][] Macierz;
     public Matrix(int m, int n){
         this.n = n;
         this.m = m;
@@ -59,7 +59,17 @@ public class Matrix {
     }
     public Matrix Next(){
         Matrix nastepny= new Matrix(m,n);
-        nastepny.WypelnijMacierz();
+
+        for (int i = 1; i <Macierz.length-1 ; i++) {
+            for (int j = 1; j <Macierz[i].length-1 ; j++) {
+                if((sasiedzi.ile(i,j,Macierz)==2) || (sasiedzi.ile(i,j,Macierz)==3)){
+                    nastepny.getMacierz()[i][j]=1;
+                }else{
+                    nastepny.getMacierz()[i][j]=0;
+                }
+            }
+
+        }
         return nastepny;
 
     }

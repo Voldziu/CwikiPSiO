@@ -2,19 +2,25 @@ package GraWZycie;
 
 public class Gra {
     public static void main(String[] args) {
-        Matrix obecny= new Matrix(10,10);
+
+        Matrix obecny= new Matrix(5,5);
         obecny.WypelnijMacierz();
-        Matrix nastepny = obecny.Next();
+
         while(true){
-            obecny.WyprintujMacierzZBarierami();
-            obecny = nastepny;
-            nastepny=obecny.Next();
+            obecny.WyprintujMacierzSrodek();
+            obecny = obecny.Next();
+            System.out.println();
+
+
             try {
-                Thread.sleep(10000);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
+
         }
+
+
 
     }
 }
