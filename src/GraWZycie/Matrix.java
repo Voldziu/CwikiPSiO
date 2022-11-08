@@ -62,10 +62,16 @@ public class Matrix {
 
         for (int i = 1; i <Macierz.length-1 ; i++) {
             for (int j = 1; j <Macierz[i].length-1 ; j++) {
-                if((sasiedzi.ile(i,j,Macierz)==2) || (sasiedzi.ile(i,j,Macierz)==3)){
-                    nastepny.getMacierz()[i][j]=1;
+                if(Macierz[i][j]==1) {
+                    if ((sasiedzi.ile(i, j, Macierz) == 2) || (sasiedzi.ile(i, j, Macierz) == 3)) {
+                        nastepny.getMacierz()[i][j] = 1;
+                    } else {
+                        nastepny.getMacierz()[i][j] = 0;
+                    }
                 }else{
-                    nastepny.getMacierz()[i][j]=0;
+                    if (sasiedzi.ile(i,j,Macierz)==3){
+                        nastepny.getMacierz()[i][j]=1;
+                    }
                 }
             }
 
