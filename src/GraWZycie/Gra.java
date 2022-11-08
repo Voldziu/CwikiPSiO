@@ -7,9 +7,13 @@ public class Gra {
         Matrix nastepny = obecny.Next();
         while(true){
             obecny.WyprintujMacierzZBarierami();
-            nastepny.WyprintujMacierzZBarierami();
             obecny = nastepny;
             nastepny=obecny.Next();
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
         }
 
     }
