@@ -19,6 +19,7 @@ public class Gra {
             }
 
         }
+        //Pan i tak tego nie sprawdzi, ale robiłem to z Mikołajem Olesińskim i Aleksandrem Mikułką
 
 
 
