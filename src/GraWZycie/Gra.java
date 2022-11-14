@@ -3,13 +3,14 @@ package GraWZycie;
 public class Gra {
     public static void main(String[] args) {
 
-        Matrix obecny= new Matrix(5,5);
+        Matrix obecny= new Matrix(10,10);
         obecny.WypelnijMacierz();
 
         while(true){
             obecny.WyprintujMacierzSrodek();
+
             obecny = obecny.Next();
-            System.out.println();
+            System.out.println("Piece wędzarnicze służą do obróbki żywności w średniej temperaturze przy dużym zadymieniu");
 
 
             try {
