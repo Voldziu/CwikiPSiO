@@ -20,7 +20,7 @@ public class Plansza {
 
 
     public void  WybierzIRozpocznij(int rzad, int kolumna){
-        plansza[rzad+1][kolumna+1].setStan(2);
+        plansza[rzad+1][kolumna+1].setStan("odkryty");
         UstawBomby(rzad,kolumna);
 
     }
@@ -34,6 +34,133 @@ public class Plansza {
             }
         }
     }
+    public void WyprintujPlansze(){
+        for (int i = 1; i <Dlugosc+1 ; i++) {
+            for (int j = 1; j <Szerokosc+1 ; j++) {
+                System.out.printf("%10s",plansza[i][j].getStan());
+
+            }
+            System.out.println();
+
+        }
+    }
+    public void WyprintujBomby(){
+        for (int i = 1; i <Dlugosc+1 ; i++) {
+            for (int j = 1; j <Szerokosc+1 ; j++) {
+                System.out.printf("%10b",plansza[i][j].getCzyBomba());
+
+
+            }
+            System.out.println();
+
+        }
+
+    }
+    public void WyprintujIleBombGraniczy(){
+        for (int i = 1; i <Dlugosc+1 ; i++) {
+            for (int j = 1; j <Szerokosc+1 ; j++) {
+                System.out.printf("%10d",plansza[i][j].getIleBombGraniczy());
+
+
+            }
+            System.out.println();
+
+        }
+
+    }
+    public void PoliczIleBombGraniczy(){
+        int wynik;
+        for (int i = 1; i <Dlugosc+1 ; i++) {
+            for (int j = 1; j <Szerokosc+1 ; j++) {
+                wynik=0;
+                if(plansza[i+1][j].getCzyBomba()){
+                    wynik++;
+                }
+                if(plansza[i+1][j+1].getCzyBomba()){
+                    wynik++;
+                }
+                if(plansza[i+1][j-1].getCzyBomba()){
+                    wynik++;                 }
+                if(plansza[i][j+1].getCzyBomba()){
+                    wynik++;                 }
+                if(plansza[i][j-1].getCzyBomba()){
+                    wynik++;                 }
+                if(plansza[i-1][j-1].getCzyBomba()){
+                    wynik++;                 }
+                if(plansza[i-1][j+1].getCzyBomba()){
+                    wynik++;                 }
+                if(plansza[i-1][j].getCzyBomba()){
+                    wynik++;
+                }
+                plansza[i][j].setIleBombGraniczy(wynik);
+            }
+        }
+    }
+    public void Odkryj(int x, int y){
+
+
+
+        plansza[x][y].setStan("odkryty");
+        if(plansza[x][y].getIleBombGraniczy()==0) {
+            plansza[x + 1][y].setStan("odkryty");
+            plansza[x + 1][y + 1].setStan("odkryty");
+            plansza[x + 1][y - 1].setStan("odkryty");   //Odkryj sąsiadów
+            plansza[x - 1][y - 1].setStan("odkryty");
+            plansza[x - 1][y + 1].setStan("odkryty");
+            plansza[x - 1][y].setStan("odkryty");
+            plansza[x][y + 1].setStan("odkryty");
+            plansza[x][y - 1].setStan("odkryty");
+
+            if (plansza[x + 1][y].getIleBombGraniczy() == 0) {
+                Odkryj(x + 1, y);
+
+            }
+//        if(plansza[x+1][y+1].getIleBombGraniczy()==0){
+//            Odkryj(x+1,y+1);
+//        }
+//        if(plansza[x+1][y-1].getIleBombGraniczy()==0){
+//            Odkryj(x+1,y-1);
+//
+//        }
+//        if(plansza[x-1][y-1].getIleBombGraniczy()==0){
+//            Odkryj(x-1,y-1);
+//        }
+//        if(plansza[x-1][y+1].getIleBombGraniczy()==0){
+//            Odkryj(x-1,y+1);
+//
+//        }
+            if (plansza[x - 1][y].getIleBombGraniczy() == 0) {
+                Odkryj(x - 1, y);
+
+            }
+            if (plansza[x][y + 1].getIleBombGraniczy() == 0) {
+                Odkryj(x, y + 1);
+
+            }
+            if (plansza[x][y - 1].getIleBombGraniczy() == 0) {
+                Odkryj(x, y - 1);
+
+            }
+        }
+
+
+    }
+    public void Wybierz(int rzad, int kolumna){
+        int x,y;
+        x= rzad+1;
+        y=kolumna+1;
+        if(plansza[x][y].getCzyBomba()){
+            System.out.println("Bomba wybuchła");
+        } else{
+            //tutaj będzie Odkryj();
+
+
+        }
+
+
+
+    }
+
 
 
 
