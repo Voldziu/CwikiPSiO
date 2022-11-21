@@ -2,17 +2,17 @@ package Saper;
 
 public class Pole {
     private boolean CzyBomba;
-    private int stan; //1-zakryty, 2-odkryty 3-flaga
+    private String stan; //1-zakryty, 2-odkryty 3-flaga
     private int IleBombGraniczy;
 
     public Pole(){
         this.CzyBomba = false;
-        this.stan=1;
-        this.IleBombGraniczy=0;
+        this.stan="zakryty";
+        this.IleBombGraniczy=1;
 
     }
 
-    public Pole(boolean CzyBomba, int stan, int ileBombGraniczy){
+    public Pole(boolean CzyBomba, String stan, int ileBombGraniczy){
         this.CzyBomba = CzyBomba;
         this.stan = stan;
         this.IleBombGraniczy=ileBombGraniczy;
@@ -23,7 +23,7 @@ public class Pole {
         return CzyBomba;
     }
 
-    public int getStan() {
+    public String getStan() {
         return stan;
     }
 
@@ -31,7 +31,7 @@ public class Pole {
         this.CzyBomba = czyBomba;
     }
 
-    public void setStan(int stan) {
+    public void setStan(String stan) {
         this.stan = stan;
     }
 
