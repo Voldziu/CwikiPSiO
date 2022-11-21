@@ -10,6 +10,7 @@ public class Plansza {
     private int Dlugosc;
     private int Szerokosc;
     private Pole[][] plansza;
+    private boolean CzyGramy=true;
 
     public Plansza(int dlugosc, int szerokosc){
         this.Dlugosc = dlugosc;
@@ -22,7 +23,9 @@ public class Plansza {
         }
     }
 
-
+    public Pole[][] getPlansza(){
+        return plansza;
+    }
     public void  WybierzIRozpocznij(int rzad, int kolumna){
         UstawBomby(rzad + 1,kolumna + 1);
         PoliczIleBombGraniczy();
@@ -49,19 +52,24 @@ public class Plansza {
                         System.out.printf("%-4d", (j - 1));
                     if(j == 0 && i != 0)
                         System.out.printf("%-4d", (i - 1));
-                }
-                else {
-                    if (plansza[i][j].getStan() == "zakryty") {
-                        System.out.print("■   ");
+                } else {
+                    if (!getCzyGramy() && plansza[i][j].getCzyBomba()) {
+
+                            System.out.print("b   "); // dodany widok bomb, gdy sie przegra
+
                     } else {
-                        if(plansza[i][j].getStan() == "flaga"){
-                            System.out.print("▲   ");
-                        }
-                        else {
-                            if (plansza[i][j].getIleBombGraniczy() == 0)
-                                System.out.print("□   ");
-                            else
-                                System.out.print(plansza[i][j].getIleBombGraniczy() + "   ");
+                        if (plansza[i][j].getStan() == "zakryty") {
+                            System.out.print("■   ");
+                        } else {
+                            if (plansza[i][j].getStan() == "flaga") {
+                                System.out.print("▲   ");
+
+                            } else {
+                                if (plansza[i][j].getIleBombGraniczy() == 0)
+                                    System.out.print("□   ");
+                                else
+                                    System.out.print(plansza[i][j].getIleBombGraniczy() + "   ");
+                            }
                         }
                     }
                 }
@@ -173,12 +181,18 @@ public class Plansza {
         y = kolumna + 1;
         if(plansza[x][y].getCzyBomba()){
             System.out.println("Bomba wybuchła");
+            CzyGramy =false;
+
         } else{
             Odkryj(x, y);
         }
 
 
 
+
+    }
+    public boolean getCzyGramy(){
+        return CzyGramy;
     }
 
 
