@@ -7,10 +7,11 @@ import java.util.Random;
 import java.util.Random;
 
 public class Plansza {
-    private int Dlugosc;
-    private int Szerokosc;
+    private int Dlugosc; //u mnie Dlugosc=x = rząd
+    private int Szerokosc; // Szerokosc = y = kolumna
     private Pole[][] plansza;
-    private boolean CzyGramy=true;
+
+    private boolean czyGramy = true;
 
     public Plansza(int dlugosc, int szerokosc){
         this.Dlugosc = dlugosc;
@@ -23,9 +24,7 @@ public class Plansza {
         }
     }
 
-    public Pole[][] getPlansza(){
-        return plansza;
-    }
+
     public void  WybierzIRozpocznij(int rzad, int kolumna){
         UstawBomby(rzad + 1,kolumna + 1);
         PoliczIleBombGraniczy();
@@ -36,7 +35,7 @@ public class Plansza {
         Random rn = new Random();
         for (int i = 1; i <Dlugosc+1 ; i++) {
             for (int j = 1; j <Szerokosc+1 ; j++) {
-                if(rn.nextInt(8)==1&& (rzad != i && kolumna != j)){
+                if(rn.nextInt(6)==1&& (rzad > i + 1 || rzad < i - 1) && (kolumna > j + 1 || kolumna < j - 1)){
                     plansza[i][j].setCzyBomba(true);
                 }
             }
@@ -52,24 +51,19 @@ public class Plansza {
                         System.out.printf("%-4d", (j - 1));
                     if(j == 0 && i != 0)
                         System.out.printf("%-4d", (i - 1));
-                } else {
-                    if (!getCzyGramy() && plansza[i][j].getCzyBomba()) {
-
-                            System.out.print("b   "); // dodany widok bomb, gdy sie przegra
-
+                }
+                else {
+                    if (plansza[i][j].getStan() == "zakryty") {
+                        System.out.print("■   ");
                     } else {
-                        if (plansza[i][j].getStan() == "zakryty") {
-                            System.out.print("■   ");
-                        } else {
-                            if (plansza[i][j].getStan() == "flaga") {
-                                System.out.print("▲   ");
-
-                            } else {
-                                if (plansza[i][j].getIleBombGraniczy() == 0)
-                                    System.out.print("□   ");
-                                else
-                                    System.out.print(plansza[i][j].getIleBombGraniczy() + "   ");
-                            }
+                        if(plansza[i][j].getStan() == "flaga"){
+                            System.out.print("▲   ");
+                        }
+                        else {
+                            if (plansza[i][j].getIleBombGraniczy() == 0)
+                                System.out.print("□   ");
+                            else
+                                System.out.print(plansza[i][j].getIleBombGraniczy() + "   ");
                         }
                     }
                 }
@@ -132,8 +126,6 @@ public class Plansza {
     }
     public void Odkryj(int x, int y){
 
-
-
         plansza[x][y].setStan("odkryty");
         if(plansza[x][y].getIleBombGraniczy()==0) {
 
@@ -175,27 +167,89 @@ public class Plansza {
 
     }
 
-    public void Wybierz(int rzad, int kolumna){
-        int x, y;
-        x = rzad + 1;
-        y = kolumna + 1;
-        if(plansza[x][y].getCzyBomba()){
-            System.out.println("Bomba wybuchła");
-            CzyGramy =false;
-
-        } else{
-            Odkryj(x, y);
+    public void zaznaczFlagę(int x, int y){
+        if(plansza[x][y].getStan() == "flaga")
+            plansza[x][y].setStan("zakryty");
+        else {
+            if (plansza[x][y].getStan() != "odkryty") {
+                plansza[x][y].setStan("flaga");
+            }
+            else
+                System.out.println("Nie można zaznaczyć odkryte pole");
         }
-
-
-
-
-    }
-    public boolean getCzyGramy(){
-        return CzyGramy;
     }
 
+    public boolean isBomb(int x, int y){
+        return plansza[x][y].getCzyBomba();
+    }
 
+    public String whatStan(int x, int y){
+        return plansza[x][y].getStan();
+    }
 
+    public boolean isGameFinished(){
+        int ileNieOznaczono = 0;
+        boolean isAllOpen = isAllOpen();
+        for (int i = 1; i < plansza.length - 1; i++) {
+            for (int j = 1; j < plansza[0].length - 1; j++) {
+                if ((plansza[i][j].getCzyBomba() == true && plansza[i][j].getStan() != "flaga" && !isAllOpen) ) {
+                    ileNieOznaczono++;
+                }
+            }
+        }
+        return ileNieOznaczono == 0;
+    }
+
+    public void setCzyGramy(boolean czyGramy) {
+        this.czyGramy = czyGramy;
+    }
+
+    public boolean isCzyGramy() {
+        return czyGramy;
+    }
+
+    public boolean isAllOpen(){
+        int a = 0;
+        for (int i = 1; i < plansza.length - 1; i++) {
+            for (int j = 1; j < plansza[0].length - 1; j++) {
+                if (plansza[i][j].getCzyBomba() == false && plansza[i][j].getStan() != "odkryty") {
+                    a++;
+                }
+            }
+        }
+        return a == 0;
+    }
+
+    public void bombExploded(){
+        for (int i = 0; i <Dlugosc+1 ; i++) {
+            for (int j = 0; j <Szerokosc+1 ; j++) {
+                if (i == 0 || j == 0) {
+                    if(i == 0 && j == 0)
+                        System.out.print("    ");
+                    if(i == 0 && j != 0)
+                        System.out.printf("%-4d", (j - 1));
+                    if(j == 0 && i != 0)
+                        System.out.printf("%-4d", (i - 1));
+                }
+                else {
+                    if (plansza[i][j].getCzyBomba()) {
+                        System.out.print("*   ");
+                    } else {
+                        if(plansza[i][j].getStan() == "zakryty"){
+                            System.out.print("■   ");
+                        }
+                        else {
+                            if (plansza[i][j].getIleBombGraniczy() == 0)
+                                System.out.print("□   ");
+                            else
+                                System.out.print(plansza[i][j].getIleBombGraniczy() + "   ");
+                        }
+                    }
+                }
+            }
+            System.out.println();
+        }
+    }
 
 }
+
