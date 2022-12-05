@@ -24,6 +24,10 @@ public class Plansza {
         }
     }
 
+    public Pole[][] getPlansza(){
+        return plansza;
+    }
+
 
     public void  WybierzIRozpocznij(int rzad, int kolumna){
         UstawBomby(rzad + 1,kolumna + 1);
@@ -192,7 +196,7 @@ public class Plansza {
         boolean isAllOpen = isAllOpen();
         for (int i = 1; i < plansza.length - 1; i++) {
             for (int j = 1; j < plansza[0].length - 1; j++) {
-                if ((plansza[i][j].getCzyBomba() == true && plansza[i][j].getStan() != "flaga" && !isAllOpen) ) {
+                if (!isAllOpen) {
                     ileNieOznaczono++;
                 }
             }

@@ -1,8 +1,14 @@
 package Saper;
-import java.util.Scanner;
+
+
+import Saper.Menu.Menu;
 
 public class Game {
     public static void main(String[] args) {
+        //GUI GUI1 = new GUI(16 ,16);
+        //new Menu();
+        new Menu();
+        /*
         int dlugosc = 10;
         int szerokosc = 10;
         Plansza board = new Plansza(dlugosc,szerokosc);
@@ -11,7 +17,7 @@ public class Game {
         int x = scanner.nextInt();
         int y = scanner.nextInt();
 
-        board.WybierzIRozpocznij(y,x);
+        board.WybierzIRozpocznij(x,y);
         board.WyprintujPlansze();
 
         while (board.isCzyGramy()){
@@ -58,6 +64,8 @@ public class Game {
             else
                 System.out.println("Wpisz prawidlowe wspolrzedne");
         }
+        */
+
     }
 }
 
